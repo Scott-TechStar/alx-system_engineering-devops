@@ -10,3 +10,5 @@ You can click the Preview link to take a look at your changes.
 --->
 
 ## Command to Print Absolute path of the current working directory
+
+## Magic Files
