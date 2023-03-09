@@ -1,1 +1,2 @@
-id -G -n
+#!/bin/bash
+groups
