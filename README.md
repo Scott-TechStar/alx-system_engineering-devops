@@ -1,4 +1,4 @@
-- 👋 Hi, I’m John Mwadime
+👋 Hi, I’m John Mwadime
 - 🌱 I’m currently learning software enginering @alx_africa
 - 📫 AlX Sofware Engineering programme
 
