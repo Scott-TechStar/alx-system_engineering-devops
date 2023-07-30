@@ -27,11 +27,11 @@ with `ps`, `pgrep`, `pkill`, `pkill`, `exit`, and `trap`.
   * [4-to_infinity_and_beyond](./4-to_infinity_and_beyond): Bash script that displays
   `To infinity and beyond` indefinitely with a `sleep 2` in between each iteration.
 
-* **5. Kill me now**
+* **5. Don't Stop Me Now**
   * [5-kill_me_now](./5-kill_me_now): Bash script that kills the
   [4-to_infinity_and_beyond](./4-to_infinity_and_beyond) process using `kill`.
 
-* **6. Kill me now made easy**
+* **6. Stop Me If You Can**
   * [6-kill_me_now_made_easy](./6-kill_me_now_made_easy): Bash script that kills the
   [4-to_infinity_and_beyond](./4-to_infinity_and_beyond) process using `pkill`.
 
@@ -46,11 +46,11 @@ with `ps`, `pgrep`, `pkill`, `pkill`, `exit`, and `trap`.
 
 * **9. Process and PID file**
   * [100-process_and_pid_file](./100-process_and_pid_file): Bash script that creates the file
-  `/var/run/holbertonscript.pid` containing its PID and displays `To infinity and
+  `/var/run/myscript.pid` containing its PID and displays `To infinity and
   beyond` indefinitely.
   * Displays `I hate the kill command` upon receiving a `SIGTERM` signal.
   * Displays `Y U no love me?!` upon receiving a `SIGINT` signal.
-  * Deletes the file `/var/run/holbertonscript.pid` and terminates itself
+  * Deletes the file `/var/run/myscript.pid` and terminates itself
   upon receiving the `SIGQUIT` or `SIGTERM` signal.
 
 * **10. Manage my process**
