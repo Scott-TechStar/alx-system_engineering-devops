@@ -1,12 +1,3 @@
 #!/usr/bin/env bash
-# Display header with column names
-echo "PID   USER       PPID   %CPU  %MEM    VSZ   RSS  TTY    STAT  START      COMMAND"
-
-# Use the 'ps' command with the required options to get the process information
-# The 'axo' options specify the output format: a (all processes), x (including those without a controlling terminal)
-# and o (user-defined format).
-# The user-defined format includes various process attributes like PID, USER, PPID, %CPU, %MEM, VSZ, RSS, TTY, STAT, START, and COMMAND.
-ps axo "pid,user,ppid,%cpu,%mem,vsz,rss,tty,stat,start,comm" | awk '{printf "%-6s%-10s%-6s%-6s%-6s%-6s%-6s%-7s%-6s%-10s%s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11}'
-
-# Note: The format "%-6s" specifies that the field should be left-justified with a width of 6 characters.
-
+#Script bash that displays a list of currently running processes
+ps -auxf
