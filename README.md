@@ -1,14 +1,41 @@
-👋 Hi, I’m John Mwadime
-- 🌱 I’m currently learning software enginering @alx_africa
-- 📫 AlX Sofware Engineering programme
 
-# ALX Software Engineering Programme
+# Alx System Engineering DevOps
 
-<!---
-Scott-TechStar/alx-pre_course is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+This repository contains programs written for the alx-system_engineering-DevOps
+track at ALX School. These projects, which began occurring in the month
+2 of the curriculum, I'm learning development tricks professionally.
+Simultaneously, I continued reinforcing and expanding my C, ruby, and shell
+scripting skills. The specific list of projects contained as follows:
 
-## Command to Print Absolute path of the current working directory
+* [0x00 Shell basics](./0x00-shell_basics)
 
-## Magic Files
+* [0x01 Shell permissions](./0x01-shell_permissions)
+
+* [0x02 Shell redirections](./0x02-shell_redirections)
+
+* [0x03 Shell variables expansions](./0x03-shell_variables_expansions)
+  
+* [0x04 Loops conditions and parsing](./0x04-loops_conditions_and_parsing)
+
+* [0x05 Processes and signals](./0x05-processes_and_signals)
+
+* [0x06 Regular expressions](./0x06-regular_expressions)
+
+
+## Author :black_nib:
+
+* **John Mwadime** <[Scott-TechStar](https://github.com/Scott-TechStar)>
+
+## Acknowledgements :pray:
+
+All work in this project was completed as part of the curriculum for ALX SE School. ALX SE School is a campus-based full-stack software
+engineering program that prepares students for careers in the tech industry
+using project-based peer learning. For more information, visit
+[this link](https://www.alxafrica.com/).
+
+
+<p align="center">
+  <img src="https://www.alxafrica.com/wp-content/uploads/2022/12/logo-white.svg">
+</p>
+
+
