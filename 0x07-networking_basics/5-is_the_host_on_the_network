@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Bash script that pings an IP address passed as an argument.
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 {IP_ADDRESS}"
+    exit 1
+fi
+
+ip_address="$1"
+
+# Check if the provided IP address is valid
+if ! ping -c 1 "$ip_address" &>/dev/null; then
+    echo "Invalid IP address: $ip_address"
+    exit 1
+fi
+
+echo "Pinging $ip_address 5 times..."
+
+# Perform 5 pings
+for ((i = 1; i <= 5; i++)); do
+    if ping -c 1 "$ip_address" &>/dev/null; then
+        echo "Ping $i to $ip_address successful"
+    else
+        echo "Ping $i to $ip_address failed"
+    fi
+done
