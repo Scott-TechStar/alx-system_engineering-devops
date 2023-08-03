@@ -21,6 +21,10 @@ scripting skills. The specific list of projects contained as follows:
 
 * [0x06 Regular expressions](./0x06-regular_expressions)
 
+* [0x07 Networking basics #0](./0x07-networking_basics)
+
+* [0x08 Networking basics #1](./0x08-networking_basics_2)
+
 
 ## Author :black_nib:
 
