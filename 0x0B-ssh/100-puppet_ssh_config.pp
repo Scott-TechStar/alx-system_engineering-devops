@@ -14,4 +14,5 @@ file{ 'etc/ssh/ssh_config':
 		   HashKnownHosts yes
 		   GSSAPIAuthentication yes
 		   GSSAPIDelegateCredentials no
+     		",
 }
