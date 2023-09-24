@@ -6,13 +6,8 @@ file{ 'etc/ssh/ssh_config':
 
       content =>"
       	      # SSH client Configurations
-	      Host 34.227.91.107
+	      host*
 	      	   PasswordAuthentication no
 		   IdentityFile ~/.ssh/school
-		   BatchMode yes
-		   SendEnv LANG LC_*
-		   HashKnownHosts yes
-		   GSSAPIAuthentication yes
-		   GSSAPIDelegateCredentials no
      		",
 }
