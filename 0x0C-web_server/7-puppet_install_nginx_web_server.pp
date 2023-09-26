@@ -5,65 +5,31 @@
 #+     at the root with a curl GET request.
 # Configures /redirect_me as a "301 Moved Permanently".
 
-package { 'nginx':
-  ensure => installed,
+# Define the nginx class
+class { 'nginx':
+  listen_port => 80,
 }
 
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
+# Create a virtual host configuration for the default server
+nginx::resource::vhost { 'default':
+  ensure   => present,
+  www_root => '/var/www/html',
 }
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => template('nginx/default.erb'),
-  notify  => Service['nginx'],
+# Define a location block for the root directory
+nginx::resource::location { 'root':
+  location   => '/',
+  ensure     => present,
+  vhost      => 'default',
+  content    => 'Hello World!',
 }
 
-file { '/etc/nginx/sites-available/default.erb':
-  ensure => file,
-  content => template('nginx/default.erb'),
-  require => Package['nginx'],
+# Define a location block for the /redirect_me URL
+nginx::resource::location { 'redirect_me':
+  location   => '/redirect_me',
+  ensure     => present,
+  vhost      => 'default',
+  content    => '',
+  rewrite    => 'permanent',
+  rewrite_to => '/',
 }
-
-file { '/etc/nginx/sites-available/default':
-  ensure  => present,
-  replace => true,
-}
-
-file { '/var/www/html/index.html':
-  ensure  => present,
-  content => 'Hello World!',
-  require => Package['nginx'],
-}
-
-file { '/etc/nginx/sites-available/redirect_me':
-  ensure  => file,
-  content => template('nginx/redirect_me.erb'),
-  require => Package['nginx'],
-}
-
-file { '/etc/nginx/sites-available/redirect_me.erb':
-  ensure => file,
-  content => template('nginx/redirect_me.erb'),
-  require => Package['nginx'],
-}
-
-file { '/etc/nginx/sites-available/redirect_me':
-  ensure  => present,
-  replace => true,
-}
-
-file { '/etc/nginx/sites-enabled/redirect_me':
-  ensure => link,
-  target => '/etc/nginx/sites-available/redirect_me',
-  require => File['/etc/nginx/sites-available/redirect_me'],
-}
-exec { 'nginx-reload':
-  command     => '/usr/sbin/nginx -s reload',
-  refreshonly => true,
-  subscribe   => [File['/etc/nginx/sites-available/default'], File['/etc/nginx/sites-available/redirect_me']],
-}
-
-Service['nginx'] ~> Exec['nginx-reload']
