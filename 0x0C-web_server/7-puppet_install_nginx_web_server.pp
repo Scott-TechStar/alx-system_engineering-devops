@@ -5,31 +5,53 @@
 #+     at the root with a curl GET request.
 # Configures /redirect_me as a "301 Moved Permanently".
 
-# Define the nginx class
-class { 'nginx':
-  listen_port => 80,
+# Install Nginx package
+package { 'nginx':
+  ensure => installed,
 }
 
-# Create a virtual host configuration for the default server
-nginx::resource::vhost { 'default':
-  ensure   => present,
-  www_root => '/var/www/html',
+# Create the root directory and index.html file
+file { '/etc/nginx/html':
+  ensure => directory,
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0755',
 }
 
-# Define a location block for the root directory
-nginx::resource::location { 'root':
-  location   => '/',
-  ensure     => present,
-  vhost      => 'default',
-  content    => 'Hello World!',
+file { '/etc/nginx/html/index.html':
+  ensure  => file,
+  content => 'Hello World!',
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
 }
 
-# Define a location block for the /redirect_me URL
-nginx::resource::location { 'redirect_me':
-  location   => '/redirect_me',
-  ensure     => present,
-  vhost      => 'default',
-  content    => '',
-  rewrite    => 'permanent',
-  rewrite_to => '/',
+# Configure Nginx site
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  content => "server {
+    listen 80;
+    listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html index.htm;
+
+    location /redirect_me {
+        return 301 https://scott-techstar.github.io/;
+    }
+}",
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+}
+
+# Enable and restart Nginx service
+service { 'nginx':
+  ensure  => running,
+  enable  => true,
+  require => [
+    Package['nginx'],
+    File['/etc/nginx/html'],
+    File['/etc/nginx/html/index.html'],
+    File['/etc/nginx/sites-available/default'],
+  ],
 }
