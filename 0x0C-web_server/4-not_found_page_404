@@ -8,7 +8,8 @@
 
 sudo apt-get update
 sudo apt-get install -y nginx
-
+touch /etc/nginx/html/index.html
+echo "Hello World!" > /etc/nginx/html/index.html
 mkdir /etc/nginx/html
 touch /etc/nginx/html/404.html
 echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
