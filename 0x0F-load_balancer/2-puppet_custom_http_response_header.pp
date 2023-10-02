@@ -4,13 +4,10 @@
 #+    Returns a page containing "Hellow World!" when queried
 #+     at the root with a curl GET request.
 # Configures /redirect_me as a "301 Moved Permanently".
-
-# Install Nginx package
 package { 'nginx':
   ensure => installed,
 }
 
-# Create the root directory and index.html file
 file { '/etc/nginx/html':
   ensure => directory,
   owner  => 'root',
@@ -26,7 +23,6 @@ file { '/etc/nginx/html/index.html':
   mode    => '0644',
 }
 
-# Configure Nginx site
 file { '/etc/nginx/sites-available/default':
   ensure  => file,
   content => "server {
@@ -50,7 +46,6 @@ file { '/etc/nginx/sites-available/default':
   mode    => '0644',
 }
 
-# Enable and restart Nginx service
 service { 'nginx':
   ensure  => running,
   enable  => true,
@@ -60,10 +55,4 @@ service { 'nginx':
     File['/etc/nginx/html/index.html'],
     File['/etc/nginx/sites-available/default'],
   ],
-}
-
-
-# Apply the custom configuration class to the node
-node $hostname {
-  include nginx_custom_http_response_header
 }
