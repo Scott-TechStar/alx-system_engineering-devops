@@ -61,3 +61,9 @@ service { 'nginx':
     File['/etc/nginx/sites-available/default'],
   ],
 }
+
+
+# Apply the custom configuration class to the node
+node $hostname {
+  include nginx_custom_http_response_header
+}
