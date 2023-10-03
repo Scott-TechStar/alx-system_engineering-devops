@@ -3,8 +3,6 @@
 #+    Enables management via the init script.
 #+    Distributes requests using a round-robin algorithm.
 
-
-# Update the system
 sudo apt update
 sudo apt upgrade
 
