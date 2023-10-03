@@ -4,55 +4,29 @@
 #+    Returns a page containing "Hellow World!" when queried
 #+     at the root with a curl GET request.
 # Configures /redirect_me as a "301 Moved Permanently".
-package { 'nginx':
-  ensure => installed,
+
+# Installs a Nginx server with custom HTTP header
+
+exec {'update':
+  provider => shell,
+  command  => 'sudo apt-get -y update',
+  before   => Exec['install Nginx'],
 }
 
-file { '/etc/nginx/html':
-  ensure => directory,
-  owner  => 'root',
-  group  => 'root',
-  mode   => '0755',
+exec {'install Nginx':
+  provider => shell,
+  command  => 'sudo apt-get -y install nginx',
+  before   => Exec['add_header'],
 }
 
-file { '/etc/nginx/html/index.html':
-  ensure  => file,
-  content => 'Hello World!',
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644',
+exec { 'add_header':
+  provider    => shell,
+  environment => ["HOST=${hostname}"],
+  command     => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOST\";/" /etc/nginx/nginx.conf',
+  before      => Exec['restart Nginx'],
 }
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => "server {
-    listen 80;
-    listen [::]:80 default_server;
-    add_header X-Served-By $hostname;
-    root   /etc/nginx/html;
-    index  index.html index.htm;
-
-    location /redirect_me {
-        return 301 https://scott-techstar.github.io/;
-    }
-    error_page 404 /404.html;
-      location /404 {
-        root /etc/nginx/html;
-        internal;
-      }
-}",
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644',
-}
-
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => [
-    Package['nginx'],
-    File['/etc/nginx/html'],
-    File['/etc/nginx/html/index.html'],
-    File['/etc/nginx/sites-available/default'],
-  ],
+exec { 'restart Nginx':
+  provider => shell,
+  command  => 'sudo service nginx restart',
 }
