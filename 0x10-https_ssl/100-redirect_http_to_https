@@ -1,41 +1,29 @@
 global
-    log     /dev/log local0
-    maxconn 2048
-    user    haproxy
-    group   haproxy
-    tune.ssl.default-dh-param 2048
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
 
 defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    retries 3
-    option  redispatch
-    timeout connect  5000
-    timeout client  10000
-    timeout server  10000
-    option  forwardfor
-    option  http-server-close
+    log global
+    mode http
+    option http-keep-alive
+    option httplog
+    option dontlognull
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
 
-frontend www-http
-    bind   0.0.0.0:80
-    reqadd X-Forwarded-Proto:\ http
-    default_backend www-backend
-    redirect scheme https code 301 if !{ ssl_fc }
+frontend http_front
+    bind *:80
+    bind *:443 ssl crt /etc/letsencrypt/live/www.scotttechstar.tech/www.scotttechstar.tech.pem
+    default_backend http_back
 
-frontend www-https
-    bind   0.0.0.0:443 ssl crt /etc/haproxy/certs/www.scotttechstar.tech.pem
-    reqadd X-Forwarded-Proto:\ https
-    acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
-    use_backend letsencrypt-backend if letsencrypt-acl
-    default_backend www-backend
-
-backend www-backend
-    balance  roundrobin
-    redirect scheme https if !{ ssl_fc }
-    server 375-web-01 34.227.91.107:80 check
-    server 375-web-02 100.25.154.95:80 check
-
-backend letsencrypt-backend
-    server letsencrypt 127.0.0.1:54321
+backend http_back
+    balance roundrobin
+    server 312760-web-01 34.227.91.107:80 check
+    server 312760-web-02 100.25.154.95:80 check
