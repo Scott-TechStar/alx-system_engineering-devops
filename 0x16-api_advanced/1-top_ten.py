@@ -1,16 +1,20 @@
 #!/usr/bin/python3
-"""the module make request from Reddits API"""
-import requests
+# get subs
+from requests import get
+from sys import argv
 
 
 def top_ten(subreddit):
-    """the function prints the titles of the first 10 hot posts"""
-    url = 'https://www.reddit.com/r/{}/.json'.format(subreddit)
-    header = {'User-Agent': 'Reddit API test'}
-    response = requests.get(url, headers=header, allow_redirects=False)
-    dict = response.json()
-    if dict.get("error", 200) == 404:
-        return print("None")
-    l_ist = dict.get("data").get("children")
-    for dic in l_ist[0:10]:
-        print(dic.get("data").get("title"))
+    """subs"""
+    head = {'User-Agent': 'Dan Kazam'}
+    try:
+        count = get('https://www.reddit.com/r/{}/hot.json?count=10'.format(
+            subreddit), headers=head).json().get('data').get('children')
+        print('\n'.join([dic.get('data').get('title')
+                         for dic in count][:10]))
+    except:
+        print('None')
+
+
+if __name__ == "__main__":
+    top_ten(argv[1])
