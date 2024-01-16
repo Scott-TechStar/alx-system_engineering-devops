@@ -1,20 +1,16 @@
 #!/usr/bin/python3
-import requests as r
+"""the module make request from Reddits API"""
+import requests
 
 
 def top_ten(subreddit):
-    """
-    queries the Reddit API and prints the titles of the first 10 hot posts
-    """
-    headers = {"User-Agent": "Frocuts"}
-    endpoint = "http://reddit.com/r/{}/hot.json?limit=10"
-    subs = r.get(endpoint.format(subreddit), headers=headers)
-    if subs.status_code != 200:
-        print(None)
-        return 0
-    subs = subs.json()
-    if subs["kind"] == "Listing":
-        for data in subs["data"]["children"]:
-            print(data["data"]["title"])
-    else:
-        print(None)
+    """the function prints the titles of the first 10 hot posts"""
+    url = 'https://www.reddit.com/r/{}/.json'.format(subreddit)
+    header = {'User-Agent': 'Reddit API test'}
+    response = requests.get(url, headers=header, allow_redirects=False)
+    dict = response.json()
+    if dict.get("error", 200) == 404:
+        return print("None")
+    l_ist = dict.get("data").get("children")
+    for dic in l_ist[0:10]:
+        print(dic.get("data").get("title"))
