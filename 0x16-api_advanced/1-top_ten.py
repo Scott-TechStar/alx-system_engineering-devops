@@ -1,20 +1,25 @@
 #!/usr/bin/python3
-# get subs
-from requests import get
-from sys import argv
+"""Function that prints top ten hot posts for a given subreddit"""
+import requests
 
 
 def top_ten(subreddit):
-    """subs"""
-    head = {'User-Agent': 'Dan Kazam'}
-    try:
-        count = get('https://www.reddit.com/r/{}/hot.json?count=10'.format(
-            subreddit), headers=head).json().get('data').get('children')
-        print('\n'.join([dic.get('data').get('title')
-                         for dic in count][:10]))
-    except:
+    """Gets top ten posts in subreddit
+       Args:
+           subreddit (str): name of subreddit
+    """
+    base_url = 'https://api.reddit.com/r/'
+    headers = {'User-Agent': 'my-app/0.0.1'}
+    response = requests.get(
+        '{}{}/hot?limit=10'.format(
+            base_url, subreddit), headers=headers, allow_redirects=False)
+
+    if response.status_code != 200:
         print('None')
-
-
-if __name__ == "__main__":
-    top_ten(argv[1])
+    else:
+        hot_dict = response.json()
+        if len(hot_dict['data']['children']) == 0:
+            print('None')
+        else:
+            for d in hot_dict['data']['children']:
+                print(d['data']['title'])
