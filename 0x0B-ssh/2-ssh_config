@@ -10,7 +10,7 @@
 # Any configuration value is only changed the first time it is set.
 # Thus, host-specific definitions should be at the beginning of the
 # 
-Host 34.227.91.107
+Host 54.90.41.108
   PasswordAuthentication no
   IdentityFile ~/.ssh/school
   BatchMode yes
