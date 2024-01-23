@@ -11,11 +11,12 @@ sudo add-apt-repository ppa:vbernat/haproxy-2.5
 sudo apt update
 sudo apt install haproxy
 
-echo "ENABLED=1" >> /etc/default/haproxy
-mv /etc/haproxy/haproxy.cfg{,.original}
-touch /etc/haproxy/haproxy.cfg
+sudo echo "ENABLED=1" >> /etc/default/haproxy
+sudo mv /etc/haproxy/haproxy.cfg{,.original}
+sudo touch /etc/haproxy/haproxy.cfg
 
-printf %s "global
+printf %s"
+  global
     log 127.0.0.1 local0 notice
     maxconn 2000
     user haproxy
@@ -23,7 +24,7 @@ printf %s "global
 
 defaults
     log     global
-    mode    HTTP
+    mode    http
     option http-keep-alive
     option  httplog
     option  dontlognull
@@ -43,6 +44,7 @@ listen hbnb
     option forwardfor
     server 312760-web-01 100.26.121.99:80 check
     server 312760-web-02 34.229.184.134:80 check
+
 " >> /etc/haproxy/haproxy.cfg
 
 sudo service haproxy start
