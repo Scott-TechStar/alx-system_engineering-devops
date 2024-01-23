@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Login to my Server
+# Login to my Load Balancer
 
 eval $("ssh-agent")
 ssh-add ~/.ssh/school
 
-ssh ubuntu@34.229.184.134
+ssh ubuntu@52.201.212.71
